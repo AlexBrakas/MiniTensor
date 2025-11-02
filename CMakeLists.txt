@@ -15,19 +15,19 @@ endif()
 # --- Create the Library ---
 add_library(MiniTensor STATIC 
     src/Tensor.cpp
-    src/Layer.cpp
-    src/Loss.cpp
-    src/Optimizer.cpp
+#    src/Layer.cpp
+#    src/Loss.cpp
+#    src/Optimizer.cpp
 )
 
 # Make sure the library's public headers are accessible
 target_include_directories(MiniTensor PUBLIC include)
 
 # --- Create the Main Application Executable ---
-add_executable(MiniTensorExample app/main.cpp)
+#add_executable(MiniTensorExample app/main.cpp)
 
 # Link the example application against your library
-target_link_libraries(MiniTensorExample PRIVATE MiniTensor)
+#target_link_libraries(MiniTensorExample PRIVATE MiniTensor)
 
 # --- Create and Register Tests ---
 enable_testing()
