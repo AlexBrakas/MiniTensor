@@ -1,0 +1,33 @@
+name: C++ CI Build and Test
+
+# This workflow runs on:
+# 1. Any push to the 'main' branch
+# 2. Any Pull Request that targets the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Get the code from your repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Configure the CMake project
+    - name: Configure CMake
+      run: cmake -S . -B build
+
+    # Build the project
+    - name: Build Project
+      run: cmake --build build --config Debug
+
+    # Run the tests using ctest
+    - name: Run Tests
+      run: |
+        cd build
+        ctest --verbose
