@@ -30,4 +30,4 @@ jobs:
     - name: Run Tests
       run: |
         cd build
-        ctest --verbose
+        ctest --verbose -C Debug
