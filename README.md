@@ -1,6 +1,6 @@
 ﻿# MiniTensor
 
-[![C++ CI Build and Test](httpshttps://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml)
+[![C++ CI Build and Test](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml)
 
 A lightweight, C++20 neural network library built from scratch. This project is a deep dive into the core components of deep learning, including N-dimensional tensors, automatic differentiation (coming soon), and dynamic computation graphs.
 
