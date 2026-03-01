@@ -1,0 +1,60 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Brakas
+    given-names: Alex
+title: "MiniTensor: A High-Performance C++ Neural Network Library from Scratch"
+version: 0.1.0
+date-released: 2026-02-28
+url: "https://github.com/AlexBrakas/MiniTensor"
+license: MIT
+repository-code: "https://github.com/AlexBrakas/MiniTensor"
+keywords:
+  - machine-learning
+  - cpp
+  - tensor-library
+  - optimization
+  - systems-programming
+abstract: >-
+  MiniTensor is a lightweight, high-performance C++ library for tensor operations 
+  and neural network inference, built with a focus on low-level cache optimizations 
+  and hardware utilization.
+references:
+  - type: article
+    authors:
+      - family-names: Goto
+        given-names: Kazushige
+      - family-names: van de Geijn
+        given-names: Robert A.
+    title: "Anatomy of High-Performance Matrix Multiplication"
+    year: 2008
+    journal: "ACM Transactions on Mathematical Software"
+    doi: "10.1145/1356052.1356053"
+  - type: article
+    authors:
+      - family-names: Chen
+        given-names: Tianqi
+      - family-names: Moreau
+        given-names: Thierry
+    title: "TVM: An Automated End-to-End Optimizing Compiler for Deep Learning"
+    year: 2018
+    journal: "Proceedings of the 13th USENIX Symposium on Operating Systems Design and Implementation"
+  - type: article
+    authors:
+      - family-names: "Zin Oo"
+        given-names: "N."
+      - family-names: "Chaikan"
+        given-names: "P."
+    title: "An Improvement of the Matrix-Matrix Multiplication Speed using 2D-Tiling and AVX512 Intrinsics for Multi-Core Architectures"
+    year: 2021
+    journal: "ASEAN Journal of Scientific and Technological Reports"
+  - type: article
+    authors:
+      - family-names: "Van Zee"
+        given-names: "Field G."
+      - family-names: "van de Geijn"
+        given-names: "Robert A."
+    title: "BLIS: A Framework for Rapidly Instantiating BLAS Functionality"
+    year: 2015
+    journal: "ACM Transactions on Mathematical Software"
+    doi: "10.1145/2764454"
