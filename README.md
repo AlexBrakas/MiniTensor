@@ -2,51 +2,69 @@
 
 [![C++ CI Build and Test](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml)
 
-A lightweight, C++20 neural network library built from scratch. This project is a deep dive into the core components of deep learning, including N-dimensional tensors, automatic differentiation (coming soon), and dynamic computation graphs.
+A dependency-free C++20 tensor library built from scratch, focused on how tensor operations map onto real hardware: memory layout, cache behaviour and SIMD. The long-term goal is a small neural-network library; the current work is the high-performance foundation underneath it.
 
-## 🚩 Current Project Status: Research for Tensor Optimization
-**Current Focus:** Low-Level Optimization & Memory Hierarchy Analysis
+## Status: Paused
 
-MiniTensor is currently in the **Deep Research Phase**. Before any high-level neural network components are implemented, the project is focusing on the mathematical and hardware-level foundation.
+Development is paused while I focus on another project.
 
-* **Academic Benchmarking:** Studying foundational papers (GotoBLAS, BLIS, TVM) to architect a cache-aware GEMM kernel.
-* **Hardware Profiling:** Analyzing AVX-512 vectorization and L1/L2/L3 cache occupancy strategies.
-* **Documentation:** Establishing a [Research Log](./docs/learning_process.md) to track the transition from theory to C++ implementation.
+**Implemented:** the N-dimensional `Tensor` core and a baseline matrix multiply, with unit tests and CI.
 
-## 🧠 Project Philosophy
+**Next, when work resumes:** a benchmark harness comparing the baseline GEMM against cache-tiled and AVX-512 versions, measured against the CPU's theoretical peak.
 
-MiniTensor is built on a four-stage iterative cycle designed to bridge the gap between high-level ML theory and low-level hardware execution:
+Design research and paper notes are kept in the [Research Log](./docs/learning_process.md).
 
-1. **Baseline:** Implement the mathematical version in pure C++.
-2. **Research:** Identify bottlenecks and study state-of-the-art optimizations (SIMD, Tiling, Packing).
-3. **Implementation:** Rewrite core kernels using intrinsics (AVX-512) and cache-aware memory management.
-4. **Benchmarking:** Quantify the performance increase to verify engineering gains.
+## Approach
 
-## 🚀 Features
-* **N-Dimensional Tensor:** A powerful, templated `Tensor` class.
-    * Constructors from shape or N-dimensional `std::vector` data.
-    * Python-like `tensor(i, j, k)` accessor for any number of dimensions.
-    * Full operator overloading (`+`, `-`, `*`, `/`) for tensors and scalars.
-* **Build System:** Professional setup using CMake.
-* **Unit Tests:** Complete test suite for the Tensor module using CTest.
-* **CI/CD:** Automatic testing on every push using GitHub Actions.
+Each component goes through four stages:
 
-## 🏁 Getting Started
+1. **Baseline:** implement the straightforward version in plain C++ and test it.
+2. **Research:** identify the bottleneck and study established optimizations (tiling, packing, SIMD), drawing on work such as GotoBLAS, BLIS and TVM.
+3. **Implementation:** rewrite the hot kernels with cache-aware layouts and intrinsics (AVX-512).
+4. **Benchmarking:** measure each step against the baseline and record what changed and why.
+
+## Features
+
+* **N-dimensional tensor:** templated `Tensor` class.
+    * Construct from a shape or from nested `std::vector` data.
+    * `tensor(i, j, k)` element access for any number of dimensions.
+    * Element-wise operators (`+`, `-`, `*`, `/`) for tensor–tensor and tensor–scalar operations.
+* **Matrix multiply:** baseline 2D GEMM, the reference for upcoming optimized kernels.
+* **Build:** CMake with presets.
+* **Tests:** unit tests for the tensor module, run with CTest.
+* **CI:** build and test on every push with GitHub Actions.
+
+## Roadmap
+
+* **Optimized GEMM:** cache tiling, operand packing, AVX-512 FMA micro-kernels, zero padding for power-of-two shapes, and multi-threading.
+* **Benchmarks:** GFLOP/s and percentage of theoretical peak for each kernel version.
+* **Neural-network layers:** layers, loss functions and optimizers built on the optimized tensor core.
+* **RISC-V Vector (exploratory):** following the schedule/compute separation from TVM (Chen et al., 2018), a vector-length-agnostic RVV back-end for the core kernels.
+
+## Getting Started
 
 ### Prerequisites
-* A C++20 compliant compiler (e.g., MSVC, GCC)
-* [CMake](https://cmake.org/download/) (Version 3.8 or higher)
 
-### Building the Project
-You can build the library, example application, and tests using CMake:
+* A C++20 compiler (GCC, Clang or MSVC)
+* [CMake](https://cmake.org/download/) (see `CMakeLists.txt` for the minimum version)
+
+### Build and test
 
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/AlexBrakas/MiniTensor.git](https://github.com/AlexBrakas/MiniTensor.git)
+git clone https://github.com/AlexBrakas/MiniTensor.git
 cd MiniTensor
 
-# 2. Configure CMake
+# 2. Configure
 cmake -S . -B build
 
-# 3. Build the project
+# 3. Build
 cmake --build build
+
+# 4. Run the tests
+ctest --test-dir build
+```
+
+## License
+
+MIT

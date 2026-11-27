@@ -30,6 +30,14 @@
             }
         },
         {
+            "name": "x64-debug-avx512",
+            "displayName": "x64 Debug (AVX-512)",
+            "inherits": "x64-debug",
+            "cacheVariables": {
+                "MINITENSOR_AVX512": "ON"
+            }
+        },
+        {
             "name": "x64-release",
             "displayName": "x64 Release",
             "inherits": "x64-debug",

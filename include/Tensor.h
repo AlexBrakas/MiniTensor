@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <cassert> 
+
 
 class Tensor {
 public:
@@ -50,6 +50,15 @@ public:
      */
     template<typename... Args>
     float& operator()(Args... coords);
+
+    /**
+     * @brief Provides read access using N-dimensional coordinates.
+     * @tparam Args A pack of integer types.
+     * @param coords The coordinates for each dimension.
+     * @return A reference to the element at the given coordinates.
+     */
+    template<typename... Args>
+    const float& operator()(Args... coords) const;
 
     /**
      * @brief Performs element-wise addition with another tensor.
@@ -106,6 +115,21 @@ public:
      * @return A new Tensor containing the result of the division.
      */
     Tensor operator/(float scalar) const;
+
+    /**
+     * @brief Performs 2D matrix multiplication (A * B).
+     * @param a The first tensor (shape n, m).
+     * @param b The second tensor (shape m, p).
+     * @return A new Tensor containing the result (shape n, p).
+     */
+    static Tensor matmul(const Tensor& a, const Tensor& b);
+
+    /**
+     * @brief Transposes the tensor.
+     * @param a The tensor to transpose (shape n, m).
+     * @return A new Tensor containing the transposition.
+    */
+    static Tensor transpose(const Tensor& a);
 
 
 private:
@@ -182,5 +206,20 @@ float& Tensor::operator()(Args... coords) {
     }
 
     assert(index >= 0 && index < _data.size() && "Tensor index is out of range");
+    return _data[index];
+}
+
+template<typename... Args>
+const float& Tensor::operator()(Args... coords) const {
+    static_assert((std::is_same_v<Args, int> && ...), "All coordinates must be integers.");
+    assert(sizeof...(coords) == _shape.size() && "Incorrect number of dimensions provided.");
+    int coords_array[] = { coords... };
+    int index = 0;
+    int stride = 1;
+    for (int i = static_cast<int>(_shape.size()) - 1; i >= 0; --i) {
+        index += coords_array[i] * stride;
+        stride *= _shape[i];
+    }
+    assert(index >= 0 && index < _data.size());
     return _data[index];
 }
