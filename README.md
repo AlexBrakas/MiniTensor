@@ -1,4 +1,4 @@
-﻿# MiniTensor
+# MiniTensor
 
 [![C++ CI Build and Test](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AlexBrakas/MiniTensor/actions/workflows/build-and-test.yml)
 
@@ -8,9 +8,9 @@ A dependency-free C++20 tensor library built from scratch, focused on how tensor
 
 Development is paused while I focus on another project.
 
-**Implemented:** the N-dimensional `Tensor` core and a baseline matrix multiply, with unit tests and CI.
+**Implemented:** the N-dimensional \Tensor` core and a tiled, OpenMP-parallel AVX-512 matrix multiply, verified against a baseline implementation with unit tests and CI.`
 
-**Next, when work resumes:** a benchmark harness comparing the baseline GEMM against cache-tiled and AVX-512 versions, measured against the CPU's theoretical peak.
+**Next, when work resumes:** a benchmark harness measuring the tiled AVX-512 GEMM against the baseline and the CPU's theoretical peak, then register-blocked micro-kernels.
 
 Design research and paper notes are kept in the [Research Log](./docs/learning_process.md).
 
@@ -29,7 +29,7 @@ Each component goes through four stages:
     * Construct from a shape or from nested `std::vector` data.
     * `tensor(i, j, k)` element access for any number of dimensions.
     * Element-wise operators (`+`, `-`, `*`, `/`) for tensor–tensor and tensor–scalar operations.
-* **Matrix multiply:** baseline 2D GEMM, the reference for upcoming optimized kernels.
+* **Matrix multiply:** tiled AVX-512 GEMM with masked edge handling and OpenMP threading, plus a scalar fallback; verified against a naive baseline.
 * **Build:** CMake with presets.
 * **Tests:** unit tests for the tensor module, run with CTest.
 * **CI:** build and test on every push with GitHub Actions.
