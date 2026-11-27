@@ -5,7 +5,6 @@ name: C++ CI Build and Test
 # 2. Any Pull Request that targets the 'main' branch
 on:
   push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
